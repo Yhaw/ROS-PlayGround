@@ -349,7 +349,7 @@
 
  <gazebo reference="camera">
     <sensor type="camera" name="camera1">
-    <visualize>true</visualize>
+    <visualize>false</visualize>
       <update_rate>30.0</update_rate>
       <camera name="head">
         <horizontal_fov>1.3962634</horizontal_fov>
@@ -392,7 +392,7 @@
   <gazebo reference="laser_frame">
     <sensor type="ray" name="laser">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
+      <visualize>false</visualize>
       <update_rate>40</update_rate>
       <ray>
         <scan>
