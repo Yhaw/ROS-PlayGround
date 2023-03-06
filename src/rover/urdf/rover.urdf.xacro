@@ -90,6 +90,64 @@
 </joint>
 
 
+<link name="board">
+  <visual>
+    <geometry>
+       <box size="0.25 0.25 0.12" />
+     </geometry>
+    <material name="blue">
+           <color rgba="0 0 .8 1"/>
+    </material>
+  </visual>
+  <collision>
+    <geometry>
+       <box size="0.01 0.01 0.01" />
+     </geometry>
+  </collision>
+  <inertial>
+    <mass value="0.004"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+</link>
+
+<joint name="board_joint" type="fixed">
+  <origin xyz="0.0 0.0 0.1" rpy="0.0 0.0 0.0"/>
+  <parent link="base_link"/>
+  <child link="board"/>
+  <axis xyz="0.0 0.0 0.0"/>
+  <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
+</joint>
+
+<link name="laser_frame">
+  <visual>
+    <geometry>
+      <cylinder radius="0.06" length="0.09"/>
+      </geometry>
+    <material name="red">
+           <color rgba="0.8 0 0 1"/>
+    </material>
+  </visual>
+  <collision>
+    <geometry>
+      <cylinder radius="0.06" length="0.09"/>
+     </geometry>
+  </collision>
+  <inertial>
+    <mass value="0.004"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+</link>
+
+<joint name="laser_joint" type="fixed">
+  <origin xyz="0.0 0.0 0.1" rpy="0.0 0.0 0.0"/>
+  <parent link="board"/>
+  <child link="laser_frame"/>
+  <axis xyz="0.0 0.0 0.0"/>
+  <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0"/>
+</joint>
+
 <xacro:macro name="wheel_right" params="name x y">
     <link name="wheel_${name}_link">
       <inertial>
@@ -173,6 +231,15 @@
 <xacro:wheel_right name="front_right" x="-0.25" y="0.40"/>
 <xacro:wheel_left name="rear_left" x="0.25" y="-0.40"/>
 <xacro:wheel_right name="rear_right" x="0.25" y="0.40"/>
+
+
+<gazebo reference="laser_frame">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+<gazebo reference="board">
+    <material>Gazebo/Blue</material>
+  </gazebo>
 
  <gazebo reference="camera">
     <material>Gazebo/Orange</material>
@@ -282,6 +349,7 @@
 
  <gazebo reference="camera">
     <sensor type="camera" name="camera1">
+    <visualize>true</visualize>
       <update_rate>30.0</update_rate>
       <camera name="head">
         <horizontal_fov>1.3962634</horizontal_fov>
@@ -292,7 +360,7 @@
         </image>
         <clip>
           <near>0.02</near>
-          <far>20</far>
+          <far>7</far>
         </clip>
         <noise>
           <type>gaussian</type>
@@ -316,6 +384,42 @@
         <distortionK3>0.0</distortionK3>
         <distortionT1>0.0</distortionT1>
         <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+
+  <gazebo reference="laser_frame">
+    <sensor type="ray" name="laser">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>40</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14</min_angle>
+            <max_angle>3.14</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.80</min>
+          <max>12.0</max>
+          <resolution>0.4</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise parameters based on published spec for Hokuyo laser
+               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+               reading. -->
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+ <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">         <topicName>/laser/scan</topicName>
+        <frameName>laser_frame</frameName>
       </plugin>
     </sensor>
   </gazebo>
