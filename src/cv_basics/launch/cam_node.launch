@@ -1,0 +1,14 @@
+<launch>
+  <node
+    pkg="cv_basics"
+    type="cam_pub"
+    name="cam_pub"
+    output="screen"
+  />
+  <node
+    pkg="cv_basics"
+    type="cam_sub"
+    name="cam_sub"
+    output="screen"
+  />
+</launch> 
