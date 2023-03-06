@@ -17,6 +17,12 @@
             args="joint_state_controller mobile_base_controller"
     />
 
+    <node name="image_control"
+            pkg="rover"
+            type="image_control.py"
+            output="screen"
+  />
+
     <rosparam file="$(find rover)/config/config.yaml" command="load"/> 
     <rosparam file="$(find rover)/config/joint_state.yaml" command="load"/> 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
