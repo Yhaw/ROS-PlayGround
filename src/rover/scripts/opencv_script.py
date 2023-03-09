@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import print_function
-#from color_detection import *
-from tensor import *
+from rover.scripts.color.color_detection import *
+from rover.scripts.tensorflow.tensor import *
 
 import roslib
 roslib.load_manifest('rover')
