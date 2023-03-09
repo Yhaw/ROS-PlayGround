@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import print_function
+from color_detection import *
 
 import roslib
 roslib.load_manifest('rover')
@@ -24,17 +25,19 @@ class image_converter:
     except CvBridgeError as e:
       print(e)
 
-    (rows,cols,channels) = cv_image.shape
-    if cols > 60 and rows > 60 :
-      cv2.circle(cv_image, (50,50), 10, 255)
+    output = detect_colors(cv_image)
 
-    cv2.imshow("Image window", cv_image)
+    cv2.imshow("Image window",output)
     cv2.waitKey(3)
 
+      
     try:
-      self.image_pub.publish(self.bridge.cv2_to_imgmsg(cv_image, "bgr8"))
+      self.image_pub.publish(self.bridge.cv2_to_imgmsg(output, "bgr8"))
     except CvBridgeError as e:
       print(e)
+
+ 
+
 
 def main(args):
   ic = image_converter()
