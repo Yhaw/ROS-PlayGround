@@ -16,15 +16,16 @@
             output="screen"
             args="joint_state_controller mobile_base_controller"
     />
+    
 
-    <node name="opencv_script"
-            pkg="rover"
-            type="opencv_script.py"
-            output="screen"
-  />
+    <node pkg="rover" type="ros_tensor_connect.py" name="tensor_connect" cwd="node" />
 
+
+    
     <rosparam file="$(find rover)/config/config.yaml" command="load"/> 
     <rosparam file="$(find rover)/config/joint_state.yaml" command="load"/> 
+    <!-- <rosparam file="$(find rover)/config/pid.yaml" command="load"/>  -->
+
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>

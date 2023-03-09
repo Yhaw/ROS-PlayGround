@@ -2,3 +2,22 @@ joint_state_controller:
   type: "joint_state_controller/JointStateController"
   publish_rate: 20
 
+wheel_left_front_controller:
+  type: "velocity_controllers/JointVelocityController"
+  joint: "wheel_left_front_joint"
+  pid: {p: 1.0, i: 0.0, d: 1.0}
+
+wheel_left_rear_controller:
+  type: "velocity_controllers/JointVelocityController"
+  joint: "wheel_left_rear_joint"
+  pid: {p: 1.0, i: 0.0, d: 1.0}
+
+wheel_right_front_controller:
+  type: "velocity_controllers/JointVelocityController"
+  joint: "wheel_right_front_joint"
+  pid: {p: 1.0, i: 0.0, d: 1.0}
+
+wheel_right_rear_controller:
+  type: "velocity_controllers/JointVelocityController"
+  joint: "wheel_right_rear_joint"
+  pid: {p: 1.0, i: 0.0, d: 1.0}

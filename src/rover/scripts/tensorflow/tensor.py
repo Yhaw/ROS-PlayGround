@@ -8,7 +8,7 @@ import pandas as pd
 
 # Carregar modelos
 detector = hub.load("https://tfhub.dev/tensorflow/efficientdet/lite2/detection/1")
-labels = pd.read_csv('~/roscpp_ws/src/rover/scripts/labels.csv',sep=';',index_col='ID')
+labels = pd.read_csv('~/roscpp_ws/src/rover/scripts/tensorflow/labels.csv',sep=';',index_col='ID')
 labels = labels['OBJECT (2017 REL.)']
 
 

@@ -1,0 +1,37 @@
+<launch> 
+
+    <arg name="rviz_config_file" default="$(find rover)/config/robot.rviz"/>
+    <param name="robot_description" command="xacro '$(find rover)/urdf/rover.urdf.xacro'"/>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_config_file)"/>
+    <!-- <node name="rviz" pkg="rviz" type="rviz"/> -->
+
+    <node name="rover1" pkg="gazebo_ros" type="spawn_model"   respawn="false" output="screen"  args="-z 1.0 -urdf -model Model1 -param robot_description"/> 
+
+    <node name="controller_spawner"
+            pkg="controller_manager"
+            type="spawner" 
+            respawn="false"
+            output="screen"
+            args="joint_state_controller mobile_base_controller"
+    />
+    
+
+    <node pkg="rover" type="ros_color_connect.py" name="color_connect" cwd="node" />
+
+
+    
+    <rosparam file="$(find rover)/config/config.yaml" command="load"/> 
+    <rosparam file="$(find rover)/config/joint_state.yaml" command="load"/> 
+    <!-- <rosparam file="$(find rover)/config/pid.yaml" command="load"/>  -->
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="false"/>
+        <arg name="use_sim_time" value="true"/>
+        <arg name="gui" value="true"/>
+        <arg name="headless" value="false"/>
+        <arg name="debug" value="false"/>
+    </include>
+
+ </launch>

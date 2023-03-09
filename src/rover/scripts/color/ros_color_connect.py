@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import print_function
-from rover.scripts.color.color_detection import *
-from rover.scripts.tensorflow.tensor import *
+from color_detection import *
+
 
 import roslib
 roslib.load_manifest('rover')
@@ -26,7 +26,7 @@ class image_converter:
     except CvBridgeError as e:
       print(e)
 
-    output = detect_object(cv_image)
+    output = detect_colors(cv_image)
 
     cv2.imshow("Image window",output)
     cv2.waitKey(3)
