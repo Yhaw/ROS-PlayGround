@@ -17,9 +17,9 @@
             args="joint_state_controller mobile_base_controller"
     />
 
-    <node name="image_control"
+    <node name="opencv_script"
             pkg="rover"
-            type="image_control.py"
+            type="opencv_script.py"
             output="screen"
   />
 
