@@ -4,11 +4,10 @@ import rospy
 from geometry_msgs.msg import Twist
 import sys, select, termios, tty
 
-# Define global variables
 speed = 0.2
 turn = 0.5
 
-# Define function to get key input from user
+ 
 def getKey():
     tty.setraw(sys.stdin.fileno())
     select.select([sys.stdin], [], [], 0)
