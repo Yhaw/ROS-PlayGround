@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<launch>
+
+    <param name="robot_description" command="xacro '$(find panda_arm)/description/urdf/panda.urdf.xacro'"/>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+    <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher_gui"/>
+
+
+
+    <node name="controller_spawner"
+            pkg="controller_manager"
+            type="spawner" 
+            respawn="false"
+            output="screen"
+            ns="/arm_position_controller"
+            args="joint_state_controller panda_joint1_position_controller panda_joint2_position_controller panda_joint3_position_controller panda_joint4_position_controller panda_joint5_position_controller panda_joint6_position_controller panda_joint7_position_controller"
+    />
+
+    <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+    <remap from="/joint_states" to="/arm_position_controller/joint_states" />
+  </node> -->
+
+    <node name="spawing_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model panda -param robot_description" />
+    <arg name="rviz_config_file" default="$(find panda_arm)/config/panda.rviz"/>
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_config_file)"/>
+    <rosparam file="$(find panda_arm)/config/joint_state.yaml" command="load"/> 
+    <rosparam file="$(find panda_arm)/config/pid.yaml" command="load"/> 
+
+
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!-- <arg name="world_name" value="$(find panda_arm)/world/filling_station.world"/> -->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+    
+        
+    </include>
+
+    
+        
+         
+</launch>
