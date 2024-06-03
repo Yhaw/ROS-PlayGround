@@ -14,5 +14,6 @@ rosrun teleop_twist_keyboard teleop_twist_keyboard.py cmd_vel:=/mobile_base_cont
 \\Change noetic to your prefered distro\\
 
 sudo apt-get install ros-noetic-ros-control ros-noetic-joint-state-controller ros-noetic-effort-controllers ros-noetic-position-controllers ros-noetic-velocity-controllers ros-noetic-ros-controllers ros-noetic-gazebo-ros ros-noetic-gazebo-ros-control -y
+sudo apt-get install ros-melodic-joint-state-publisher-gui
 
 pip install teleop_twist_keyboard
