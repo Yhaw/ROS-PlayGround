@@ -210,6 +210,8 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_executable(cam_pub src/cam_pub.cpp)
 target_link_libraries(cam_pub ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
